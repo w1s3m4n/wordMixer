@@ -7,6 +7,7 @@
 * Author: Pablo Gómez Delgado (w1s3m4n)
 """
 import argparse
+import sys
 
 def getUppers(word):
 
@@ -60,10 +61,14 @@ def joinwords(words1, words2, depth):
 
 if __name__ == "__main__":
 
-	parser = argparse.ArgumentParser()
-	parser.add_argument('inputfile', 'The input file. One word per line. Lowercase' ,default='words.txt')
-	parser.add_argument('depth', 'Depth of concatenation. Default: 3 (The higher the depth, the higer the processing requirements)' ,default='words.txt')
+	parser = argparse.ArgumentParser(description='Word wordlister for brute force attacks')
+	parser.add_argument('--inputfile', '-i', required=True, help='The input file. One word per line. Lowercase')
+	parser.add_argument('--depth', '-d', required=False, help='Depth of concatenation. Default: 3 (The higher the depth, the higher the processing requirements)', default=3)
 	args = parser.parse_args()
+	if len(sys.argv) < 2:
+		print("[!] ERROR: Invalid arguments")
+		parser.print_help()
+		exit()
 
 	processed_words = []
 	descriptor = open(args.inputfile, "r")
